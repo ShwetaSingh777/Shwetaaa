@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="bs/css/bootstrap.css">
+    <link rel="stylesheet" href="bs/css/mdb.css">
+    <link rel="stylesheet" href="bs/css/style.css">
+    <link rel="stylesheet" media="(max-width:1000px)" href="mobile.css">
+    <link rel="stylesheet" media="(min-width:1001px) and (max-width:1320px)" href="laptop.css">
+    <link rel="stylesheet" media="(min-width:1321px)" href="wide.css">
+    <title>Shweta X BTS</title>
+    <style>
+        #tarotCardContainer {
+            position: relative;
+            width: 800px;
+            height: 450px;
+            margin: 20px;
+            overflow: hidden;
+        }
+
+        #tarotCard {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .controlButton {
+            position: absolute;
+            border-radius: 10%;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #startButton {
+            top: 10px;
+            left: 10px;
+        }
+
+        #stopButton {
+            top: 10px;
+            left: 70px;
+        }
+
+        #resetButton {
+            top: 10px;
+            left: 130px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="tarotCardContainer">
+    <div id="tarotCard"></div>
+    <button id="startButton" class="controlButton btn-dark" onclick="startReading()">Start Reading</button>
+    <button id="stopButton" class="controlButton btn-dark" onclick="stopReading()">Stop Reading</button>
+    <button id="resetButton" class="controlButton btn-dark" onclick="resetReading()">Reset Reading</button>
+</div>
+
+<script>
+    const tarotCards = [
+        'Card-02.png', 'Card-03.png', 'Card-04.png', 'Card-05.png', 'Card-06.png', 'Card-07.png',
+        'Card-08.png', 'Card-09.png', 'Card-10.png', 'Card-11.png', 'Card-12.png','Card-13.png',
+        'Card-14.png', 'Card-15.png', 'Card-16.png', 'Card-17.png', 'Card-18.png', 'Card-20.png',
+        'Card-21.png', 'Card-22.png', 'Card-23.png'
+    ];
+
+    let currentFrame = 0;
+    let isReading = false;
+    const tarotCardElement = document.getElementById('tarotCard');
+    const imageObjects = [];
+
+    // Preload images
+    tarotCards.forEach((cardPath) => {
+        const img = new Image();
+        img.src = cardPath;
+        imageObjects.push(img);
+    });
+
+    function startReading() {
+        isReading = true;
+        showNextCard();
+    }
+
+    function stopReading() {
+        isReading = false;
+    }
+
+    function resetReading() {
+        isReading = false;
+        currentFrame = 0;
+        showCard();
+    }
+
+    function showNextCard() {
+        if (isReading) {
+            showCard();
+            setTimeout(showNextCard, 20); // Change the delay as needed
+        }
+    }
+
+    function showCard() {
+        const cardIndex = currentFrame % tarotCards.length;
+        const cardImagePath = tarotCards[cardIndex];
+        tarotCardElement.style.backgroundImage = `url(${cardImagePath})`;
+        currentFrame++;
+    }
+</script>
+
+<script src="bs/js/jquery.js"></script>
+<script>
+    var $jq = jQuery.noConflict();
+</script>
+<script src="bs/js/popper.js"></script>
+<script src="bs/js/bootstrap.js"></script>
+<script src="bs/js/mdb.js"></script>
+
+</body>
+</html>
